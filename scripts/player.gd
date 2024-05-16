@@ -6,6 +6,8 @@ const JUMP_VELOCITY: float = -300.0
 
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var ray_cast_right = $RayCastRight
+@onready var ray_cast_left = $RayCastLeft
 
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -32,6 +34,11 @@ func _physics_process(delta: float) -> void:
 			sprite.play("run")
 	else:
 		sprite.play("jump")
+	
+	if ray_cast_right.is_colliding():
+		velocity.y = -100
+	elif ray_cast_left.is_colliding():
+		velocity.y = -100
 	
 	if direction:
 		velocity.x = direction * SPEED
