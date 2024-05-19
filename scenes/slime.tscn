@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfnxpm00ebrvi"]
+[gd_scene load_steps=12 format=3 uid="uid://cfnxpm00ebrvi"]
 
 [ext_resource type="Texture2D" uid="uid://1gcx601i61av" path="res://assets/sprites/slime_green.png" id="1_6lkro"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_vllnm"]
@@ -20,6 +20,14 @@ region = Rect2(48, 24, 24, 24)
 atlas = ExtResource("1_6lkro")
 region = Rect2(72, 24, 24, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ia7s"]
+atlas = ExtResource("1_6lkro")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w41v2"]
+atlas = ExtResource("1_6lkro")
+region = Rect2(72, 48, 24, 24)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ktvs6"]
 animations = [{
 "frames": [{
@@ -38,10 +46,21 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ia7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w41v2")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ef0i"]
-size = Vector2(10, 13)
+size = Vector2(10, 11)
 
 [node name="Slime" type="Node2D"]
 script = ExtResource("1_vllnm")
@@ -50,13 +69,11 @@ script = ExtResource("1_vllnm")
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_ktvs6")
 autoplay = "default"
-frame = 3
-frame_progress = 0.795509
 
 [node name="KillZone" parent="." instance=ExtResource("2_scc6i")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
-position = Vector2(0, -6.5)
+position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_3ef0i")
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
@@ -66,3 +83,7 @@ target_position = Vector2(8, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, -6)
 target_position = Vector2(-8, 0)
+
+[node name="RayCastTop" type="RayCast2D" parent="."]
+target_position = Vector2(0, -15)
+collision_mask = 2
